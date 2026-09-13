@@ -1,0 +1,6 @@
+# Core runtime GUI and process telemetry dependencies
+PySide6>=6.6.0
+psutil>=5.9.0
+
+# Packaging (optional, needed to build standalone exe)
+pyinstaller>=6.0.0
