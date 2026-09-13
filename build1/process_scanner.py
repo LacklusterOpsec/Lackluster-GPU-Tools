@@ -176,8 +176,9 @@ class InventoryScanner:
             was_modified = norm_path in self.modified_running_apps
             item.check_restart_needed(was_running_when_modified=was_modified)
 
-        # Return sorted list: active/running apps first, then alphabetically
-        return sorted(items_map.values(), key=lambda x: (not x.is_running, not (x.nvidia_in_smi or x.nvidia_util > 0 or x.intel_util > 0), x.display_name.lower()))
+        # Return stably sorted list: active/running apps first, then by normalized path
+        # Using norm_path guarantees row stability across polls so only cell values change in-place
+        return sorted(items_map.values(), key=lambda x: (not x.is_running, x.norm_path))
 
 
 if __name__ == "__main__":

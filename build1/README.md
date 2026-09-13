@@ -60,13 +60,11 @@ A modern desktop application built in Python (PySide6) to inspect, monitor, and 
 
 ### Option A: Using uv (Recommended)
 ```powershell
-cd i:\source\GPU
-uv run --python .venv python main.py
+uv run main.py
 ```
 
 ### Option B: Using the Virtual Environment directly
 ```powershell
-cd i:\source\GPU
 .\.venv\Scripts\python.exe main.py
 ```
 
@@ -74,27 +72,29 @@ cd i:\source\GPU
 
 ## Running the Automated Test Suite
 ```powershell
-.\.venv\Scripts\python.exe test_app_components.py
+uv run python test_app_components.py
 ```
+*(or `.\.venv\Scripts\python.exe test_app_components.py`)*
 
 ---
 
 ## PyInstaller Packaging Steps (Single Executable)
 
-To bundle the application into a standalone `.exe` that does not require Python or uv:
+You can build the single-file executable at any time using the provided build scripts:
 
-### Step 1: Install PyInstaller into the environment
-```powershell
-uv pip install pyinstaller --python .venv
-```
+* **PowerShell**: `.\build.ps1`
+* **Command Prompt / File Explorer**: Double-click `build.bat`
 
-### Step 2: Build the standalone `.exe`
+### Manual CLI Build Command
 ```powershell
-.\.venv\Scripts\pyinstaller.exe `
+uv run --extra build python -m PyInstaller `
     --name "GPUPreferenceManager" `
     --onefile `
     --windowed `
+    --clean `
+    --noconfirm `
     --hidden-import "ctypes" `
+    --hidden-import "ctypes.wintypes" `
     --hidden-import "winreg" `
     --hidden-import "psutil" `
     --hidden-import "PySide6.QtCore" `
@@ -103,6 +103,5 @@ uv pip install pyinstaller --python .venv
     main.py
 ```
 
-### Step 3: Run the output binary
-The bundled single-file executable will be generated at:
-`i:\source\GPU\dist\GPUPreferenceManager.exe`
+The output executable is created at:
+`dist\GPUPreferenceManager.exe`
