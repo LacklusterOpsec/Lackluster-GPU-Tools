@@ -10,16 +10,16 @@ Write-Host "==========================================================" -Foregro
 Write-Host "`n[1/3] Installing PyInstaller into .venv..." -ForegroundColor Yellow
 uv pip install pyinstaller --python .venv
 
-# 2. Check pyinstaller.exe path
-$pyinstaller = ".\.venv\Scripts\pyinstaller.exe"
-if (-not (Test-Path $pyinstaller)) {
-    Write-Error "PyInstaller executable not found at $pyinstaller"
+# 2. Check python executable path
+$python = ".\.venv\Scripts\python.exe"
+if (-not (Test-Path $python)) {
+    Write-Error "Python executable not found at $python"
     exit 1
 }
 
-# 3. Run PyInstaller
+# 3. Run PyInstaller via Python module (avoids uv trampoline path issues)
 Write-Host "`n[2/3] Bundling standalone executable with PyInstaller..." -ForegroundColor Yellow
-& $pyinstaller `
+& $python -m PyInstaller `
     --name "GPUPreferenceManager" `
     --onefile `
     --windowed `
