@@ -1,0 +1,27 @@
+# uv project manifest for GPU Preference Tuner.
+# The app itself is pure stdlib (tkinter + winreg + ctypes + subprocess),
+# so the runtime dependency list is intentionally empty.
+#
+#   uv sync                 # create .venv (nothing to install at runtime)
+#   uv sync --group build   # + install pyinstaller for packaging
+#   uv run gpu_pref_tuner.py
+
+[project]
+name = "gpu-pref-tuner"
+version = "0.1.0"
+description = "Windows per-app GPU preference inventory and bulk editor (tkinter, stdlib-only)"
+requires-python = ">=3.9"
+dependencies = []
+
+# Modern (PEP 735) dependency group for packaging; uv-native alternative to
+# the optional-dependencies table.  requirements.txt is kept too, for parity
+# with the build1 convention (build.ps1 / build.bat use uv pip directly).
+[dependency-groups]
+build = [
+    "pyinstaller>=6.0.0",
+]
+
+# This project is a single script, not an importable package: uv must not
+# try to build/install it as a wheel.
+[tool.uv]
+package = false

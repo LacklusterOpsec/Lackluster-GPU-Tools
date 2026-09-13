@@ -1,0 +1,5 @@
+# Runtime: zero third-party dependencies (tkinter + Python stdlib only).
+# tkinter ships with the Python installer; uv-managed Pythons include it.
+
+# Packaging (optional, needed to build the standalone exe)
+pyinstaller>=6.0.0
